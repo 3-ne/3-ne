@@ -1,0 +1,34 @@
+name: Run Discord Bot
+
+on:
+  push:
+    branches:
+      - main  # أو أي فرع تعمل عليه
+  pull_request:
+    branches:
+      - main  # أو أي فرع تعمل عليه
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'  # اختر الإصدار الذي يتناسب مع مشروعك
+
+      - name: Install dependencies
+        run: |
+          npm install
+
+      - name: Run bot
+        run: |
+          node index.js
+        env:
+          TOKEN: ${{ secrets.TOKEN }}
+          GUILD: ${{ secrets.GUILD }}
+          CHANNEL: ${{ secrets.CHANNEL }}
